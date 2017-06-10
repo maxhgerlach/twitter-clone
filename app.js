@@ -34,7 +34,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // get route
 app.get('/', function(req, res) {
-    res.render('tweets');
+    var query = 'SELECT * FROM Tweets ORDER BY created_at DESC';
+
+    connection.query(query, function(err, results) {
+        if(err) {
+            console.log(err);
+        }
+
+        for (var i = 0; i < results.length; i++) {
+            console.log(results[i]);
+        }
+        
+        res.render('tweets');
+    });
 });
 
 // post route
