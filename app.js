@@ -45,6 +45,9 @@ app.post('/tweets/create', function(req, res) {
     var body = req.body.body;
 
     connection.query(query, [handle, body], function(err) {
+        if (err) {
+            console.log(err);
+        }
         res.redirect('/');
     });
 });
