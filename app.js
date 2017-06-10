@@ -3,6 +3,7 @@
 var mysql = require('mysql');
 var express = require('express');
 var bodyParser = require('body-parser');
+var moment = require('moment');
 
 var connection = mysql.createConnection({
     host: '127.0.0.1',
@@ -42,7 +43,8 @@ app.get('/', function(req, res) {
         }
 
         for (var i = 0; i < results.length; i++) {
-            console.log(results[i]);
+            var tweet = results[i];
+            tweet.time_from_now = moment(tweet.created_at).fromNow();
         }
         
         res.render('tweets', { tweets: results });
