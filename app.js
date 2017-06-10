@@ -32,7 +32,7 @@ app.set('views', './views');
 app.use(express.static('./public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// get route
+// homepage get route
 app.get('/', function(req, res) {
     var query = 'SELECT * FROM Tweets ORDER BY created_at DESC';
 
@@ -45,7 +45,7 @@ app.get('/', function(req, res) {
             console.log(results[i]);
         }
         
-        res.render('tweets');
+        res.render('tweets', { tweets: results });
     });
 });
 
