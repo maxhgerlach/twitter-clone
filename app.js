@@ -44,9 +44,8 @@ app.post('/tweets/create', function(req, res) {
     var handle = req.body.handle;
     var body = req.body.body;
 
-    console.log(handle);
-    console.log(body);
-    
-    res.send('Creating tweet.');
+    connection.query(query, [handle, body], function(err) {
+        res.send('Creating tweets');
+    });
 });
 
