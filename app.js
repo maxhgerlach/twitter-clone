@@ -12,7 +12,12 @@ app.get('/', function(req, res) {
     res.render('tweets');
 });
 
+// post route
+app.post('/tweets/create', function(req, res) {
+    res.send('Creating tweet.');
+});
+
 // listen for requests
 app.listen(8080, function() {
-    console.log('Web server listening on port 8080!');
+    console.log('Web server now listening on port 8080!');
 });
