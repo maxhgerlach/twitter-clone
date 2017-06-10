@@ -25,4 +25,29 @@ body {
 
 *, *:before, *:after {
     box-sizing: inherit;
+             }
+
+#tweet-form {
+    padding: 10px 12px 10px 12px;
+    background-color: #e8f4fb;
 }
+
+#tweet-form-handle, #tweet-form-body {
+    font-size: 14px;
+    margin-bottom: 8px;
+    padding: 8px 10px 8px 10px;
+    border: 1px solid #a3d4f2;
+    border-radius: 3px;
+    width: 100%;
+}
+
+#tweet-form-button {
+    color: #ffffff;
+    font-size: 14px;
+    padding: 7px 8px;
+    background-color: #1b95e0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+    
