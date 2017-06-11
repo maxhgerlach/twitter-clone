@@ -57,7 +57,13 @@ app.get('/tweets/:id([0-9]+)/edit', function(req, res) {
     var id = req.params.id;
 
     connection.query(query, [id], function(err, results) {
-        res.send(id);
+        if (err || results.length === 0) {
+            console.log(err || 'No tweet found');
+            res.redirect('/');
+            return;
+        }
+
+        res.render('edit-tweet', { tweet: results[0] });
     });
 });
 
