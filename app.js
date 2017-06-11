@@ -87,17 +87,29 @@ app.post('/tweets/create', function(req, res) {
 
 // update post route
 app.post('/tweets/:id([0-9]+)/update', function(req, res) {
-    var query = 'UPDATE Tweets SET body = ?, handle = ? WHERE id = ?';
+    var updateQuery = 'UPDATE Tweets SET body = ?, handle = ? WHERE id = ?';
+    var deleteQuery = 'DELETE FROM Tweets WHERE id = ?';
     var id = req.params.id;
     var handle = req.body.handle;
     var body = req.body.body;
+    var isDelete = req.body.delete_button !== undefined;
 
-    connection.query(query, [body, handle, id], function(err, results) {
-        if (err) {
-            console.log(err);
-        }
+    if (isDelete) {
+        connection.query(deleteQuery, [id], function(err) {
+            if (err) {
+                console.log(err);
+            }
 
-        res.redirect('/');
-    });
+            res.redirect('/');
+        });
+    } else {
+        connection.query(updateQuery, [body, handle, id], function(err, results) {
+            if (err) {
+                console.log(err);
+            }
+
+            res.redirect('/');
+        });
+    }
 });
 
