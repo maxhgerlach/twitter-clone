@@ -53,7 +53,12 @@ app.get('/', function(req, res) {
 
 // edit tweet get route
 app.get('/tweets/:id([0-9]+)/edit', function(req, res) {
-    res.send(req.params.id);
+    var query = "SELECT * FROM Tweets WHERE id = ?";
+    var id = req.params.id;
+
+    connection.query(query, [id], function(err, results) {
+        res.send(id);
+    });
 });
 
 // post route
