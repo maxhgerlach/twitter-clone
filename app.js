@@ -51,6 +51,11 @@ app.get('/', function(req, res) {
     });
 });
 
+// edit tweet get route
+app.get('/tweets/:id([0-9]+)/edit', function(req, res) {
+    res.send(req.params.id);
+});
+
 // post route
 app.post('/tweets/create', function(req, res) {
     var query = 'INSERT INTO Tweets(handle, body) VALUES(?, ?)';
