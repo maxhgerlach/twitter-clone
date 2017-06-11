@@ -3,6 +3,7 @@
 var mysql = require('mysql');
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var moment = require('moment');
 
 var connection = mysql.createConnection({
@@ -32,6 +33,7 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static('./public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // homepage get route
 app.get('/', function(req, res) {
@@ -73,14 +75,19 @@ app.get('/tweets/:id([0-9]+)/edit', function(req, res) {
 // create post route
 app.post('/tweets/create', function(req, res) {
     var query = 'INSERT INTO Tweets(handle, body) VALUES(?, ?)';
-
     var handle = req.body.handle;
     var body = req.body.body;
+    var tweetsCreated = req.cookies.tweets_created || [];
 
-    connection.query(query, [handle, body], function(err) {
+    connection.query(query, [handle, body], function(err, results) {
         if (err) {
             console.log(err);
         }
+
+        console.log(results);
+        tweetsCreated.push(results.insertId);
+        res.cookie('tweets_created', tweetsCreated, { httpOnly: true });
+        
         res.redirect('/');
     });
 });
