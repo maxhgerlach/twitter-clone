@@ -86,7 +86,6 @@ app.post('/tweets/create', function(req, res) {
             console.log(err);
         }
 
-        console.log(results);
         tweetsCreated.push(results.insertId);
         res.cookie('tweets_created', tweetsCreated, { httpOnly: true });
         
