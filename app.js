@@ -93,23 +93,18 @@ app.post('/tweets/:id([0-9]+)/update', function(req, res) {
     var handle = req.body.handle;
     var body = req.body.body;
     var isDelete = req.body.delete_button !== undefined;
+    var queryCallback = function(err) {
+        if (err) {
+            console.log(err);
+        }
 
+        res.redirect('/');
+    };
+    
     if (isDelete) {
-        connection.query(deleteQuery, [id], function(err) {
-            if (err) {
-                console.log(err);
-            }
-
-            res.redirect('/');
-        });
+        connection.query(deleteQuery, [id], queryCallback);
     } else {
-        connection.query(updateQuery, [body, handle, id], function(err, results) {
-            if (err) {
-                console.log(err);
-            }
-
-            res.redirect('/');
-        });
+        connection.query(updateQuery, [body, handle, id], queryCallback);
     }
 });
 
