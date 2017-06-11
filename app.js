@@ -4,7 +4,9 @@ var mysql = require('mysql');
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var authUser = require('./middleware/auth-user');
 var moment = require('moment');
+
 
 var connection = mysql.createConnection({
     host: '127.0.0.1',
@@ -54,7 +56,7 @@ app.get('/', function(req, res) {
 });
 
 // edit tweet get route
-app.get('/tweets/:id([0-9]+)/edit', function(req, res) {
+app.get('/tweets/:id([0-9]+)/edit', authUser, function(req, res) {
     var query = "SELECT * FROM Tweets WHERE id = ?";
     var id = req.params.id;
 
@@ -93,7 +95,7 @@ app.post('/tweets/create', function(req, res) {
 });
 
 // update post route
-app.post('/tweets/:id([0-9]+)/update', function(req, res) {
+app.post('/tweets/:id([0-9]+)/update', authUser, function(req, res) {
     var updateQuery = 'UPDATE Tweets SET body = ?, handle = ? WHERE id = ?';
     var deleteQuery = 'DELETE FROM Tweets WHERE id = ?';
     var id = req.params.id;
