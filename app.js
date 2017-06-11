@@ -40,6 +40,7 @@ app.use(cookieParser());
 // homepage get route
 app.get('/', function(req, res) {
     var query = 'SELECT * FROM Tweets ORDER BY created_at DESC';
+    var tweetsCreated = req.cookies.tweets_created || [];
 
     connection.query(query, function(err, results) {
         if(err) {
@@ -49,6 +50,7 @@ app.get('/', function(req, res) {
         for (var i = 0; i < results.length; i++) {
             var tweet = results[i];
             tweet.time_from_now = moment(tweet.created_at).fromNow();
+            tweet.isEditable = tweetsCreated.includes(tweet.id);
         }
         
         res.render('tweets', { tweets: results });
